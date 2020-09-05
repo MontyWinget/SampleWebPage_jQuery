@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
+/* Style the tab */
+.tab {
+  overflow: initial;
+  /* border: 1px solid #ccc; */
+  background-color: #f1f1f1;
+}
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  height: 50px;
+  width: 120px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+.tablinks{
+    margin-right: 5px;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+.box{ 
+        padding: 20px;
+        display: none;
+        margin-top: 10px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+/* Fade in tabs */
+@-webkit-keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+label {
+  display: inline-block;
+  width: 100px;
+  text-align: left;
+}​
+</style>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Tab 1')">Tab 1</button>
+  <button class="tablinks" onclick="openCity(event, 'Tab 2')">Tab 2</button>
+</div>
+
+<div id="Tab 1" class="tabcontent">
+    <br><br><br>
+    <form>
+        <label for="label1">Label 1:</label>
+        <input type="text" id="fname" name="fname"><br><br>
+        <label for="label2">Label 2:</label>
+        <input type="text" id="lname" name="lname"><br><br>
+        <label for="label3">Label 3:</label>
+        <input type="text" id="lname" name="lname"><br><br>
+        <label for="label3">Dropdown :</label>
+        <select>
+            <option>Hide Table</option>
+            <option value="1">Show Table</option>
+        </select>
+        <div class="1 box" >
+        <div id="dvTable"></div>
+        <center><input type="button" value="Get Selected" onclick="GetSelected()" /></center>
+                
+</div>
+
+</div>  
+
+<div id="Tab 2" class="tabcontent">
+<br><br><br>    
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    function GenerateTable() {
+        //Build an array containing Customer records.
+        var customers = new Array();
+        var tr="<tr>";
+        var chk="<td><input type='checkbox' id='chk_"+i+"' /></td>";
+        customers.push(["Select", "Id", "Name", "Email"]);
+        customers.push([chk, 1, "John Wick", "Johnwick@gmail.com"]);
+        customers.push([chk, 2, "Monty Winget", "monty.winget@gmail.com"]);
+        customers.push([chk, 3, "Suzanne Mathews", "suzannemathews@gmail.com"]);
+        customers.push([chk, 4, "Robert Schidner", "robertschidner@gmail.com"]);
+ 
+        //Create a HTML Table element.
+        var table = document.createElement("TABLE");
+        table.setAttribute("id", "Table1")
+        table.border = "1";
+        table.setAttribute("Class", "table table-bordered")
+        
+ 
+        //Get the count of columns.
+        var columnCount = customers[0].length;
+ 
+        //Add the header row.
+        var row = table.insertRow(-1);
+        row.setAttribute("Class", "thead-dark")
+        for (var i = 0; i < columnCount; i++) {
+            var headerCell = document.createElement("TH");
+            headerCell.innerHTML = customers[0][i];
+            row.appendChild(headerCell);
+        }
+ 
+        //Add the data rows.
+        for (var i = 1; i < customers.length; i++) {
+            row = table.insertRow(-1);
+            for (var j = 0; j < columnCount; j++) {
+                var cell = row.insertCell(-1);
+                cell.innerHTML = customers[i][j];
+            }
+        }
+ 
+        var dvTable = document.getElementById("dvTable");
+        dvTable.innerHTML = "";
+        dvTable.appendChild(table);
+    }
+</script>
+<script>
+    //show table by Dropwown
+    $(document).ready(function(){
+    $("select").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".box").not("." + optionValue).hide();
+                $("." + optionValue).show();
+                GenerateTable();
+            } else{
+                $(".box").hide();
+            }
+        });
+    }).change();
+});
+
+//open tabs
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+//Func to show table data in alert
+function GetSelected() {
+        //Reference the Table.
+        var grid = document.getElementById("Table1");
+ 
+        //Reference the CheckBoxes in Table.
+        var checkBoxes = grid.getElementsByTagName("INPUT");
+        var message = "Id      Name                     Email\n";
+ 
+        //Loop through the CheckBoxes.
+        for (var i = 0; i < checkBoxes.length; i++) {
+            if (checkBoxes[i].checked) {
+                var row = checkBoxes[i].parentNode.parentNode;
+                message += row.cells[1].innerHTML;
+                message += "       " + row.cells[2].innerHTML;
+                message += "       " + row.cells[3].innerHTML;
+                message += "\n";
+            }
+        }
+
+        //Display selected Row data in Alert Box.
+        alert(message);
+    }
+</script>
+</body>
+</html>
